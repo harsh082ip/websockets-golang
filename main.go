@@ -1,10 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
-
-	manager "github.com/harsh082ip/websockets-golang/Manager"
 )
 
 const (
@@ -12,10 +11,11 @@ const (
 )
 
 func main() {
-	manager := manager.NewManager()
+	manager := NewManager()
 
 	http.Handle("/", http.FileServer(http.Dir("./static")))
 	http.HandleFunc("/ws", manager.ServeWs)
 
+	fmt.Println("Server Started on ", WEBPORT)
 	log.Fatal(http.ListenAndServe(WEBPORT, nil))
 }
